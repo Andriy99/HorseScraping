@@ -26,9 +26,9 @@ namespace HorseScrapping
             try
             {
                 m_chrDriver.Navigate().GoToUrl(m_strDomain);
-                WaitForTagVisible(m_chrDriver, By.CssSelector("form[id='login_forms']"));
+                WaitForTagVisible(m_chrDriver, By.CssSelector("form[id='login_form']"));
                 previousSource = m_chrDriver.PageSource;
-                IWebElement loginContainer = getElementBy(m_chrDriver, By.CssSelector("form[id='login_forms']"));
+                IWebElement loginContainer = getElementBy(m_chrDriver, By.CssSelector("form[id='login_form']"));
                 IWebElement userElement = loginContainer.FindElement(By.CssSelector("input[id='user_name_textbox']"));
                 IWebElement pwdElement = loginContainer.FindElement(By.CssSelector("input[id='user_pswd_textbox']"));
                 IWebElement loginSubmitBtn = loginContainer.FindElement(By.CssSelector("button[id='login_button']"));
@@ -78,19 +78,26 @@ namespace HorseScrapping
                 IEnumerable<IWebElement> raceRows = raceRowsContainer.FindElements(By.CssSelector("tr[class='race-wp-table']"));
                 foreach (IWebElement raceItem in raceRows)
                 {
-                    RunnerNamePrice runnerNameTemp = new RunnerNamePrice();
-                    runnerNameTemp.m_strRunnerNumber = raceItem.FindElement(By.CssSelector("td[class='race-wp-table no_cell']")).Text;
-                    runnerNameTemp.m_strRunnerName = raceItem.FindElement(By.CssSelector("span[class='race-wp-table runner_name']")).Text;
                     try
                     {
-                        runnerNameTemp.m_strWinPrice = raceItem.FindElements(By.CssSelector("td[class='race-wp-table bet_cell']")).ElementAt(0).Text;
-                        runnerNameTemp.m_strFixedPrice = raceItem.FindElements(By.CssSelector("td[class='race-wp-table bet_cell']")).ElementAt(2).Text;
+                        RunnerNamePrice runnerNameTemp = new RunnerNamePrice();
+                        runnerNameTemp.m_strRunnerNumber = raceItem.FindElement(By.CssSelector("td[class='race-wp-table no_cell']")).Text;
+                        runnerNameTemp.m_strRunnerName = raceItem.FindElement(By.CssSelector("span[class='race-wp-table runner_name']")).Text;
+                        try
+                        {
+                            runnerNameTemp.m_strWinPrice = raceItem.FindElements(By.CssSelector("td[class='race-wp-table data_cell']")).ElementAt(0).Text;
+                            runnerNameTemp.m_strFixedPrice = raceItem.FindElements(By.CssSelector("td[class='race-wp-table data_cell']")).ElementAt(2).Text;
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+                        m_lstRunnerName.Add(runnerNameTemp);
                     }
                     catch (Exception e)
                     {
 
                     }
-                    m_lstRunnerName.Add(runnerNameTemp);
 
                 }
                 return m_lstRunnerName.ToArray();

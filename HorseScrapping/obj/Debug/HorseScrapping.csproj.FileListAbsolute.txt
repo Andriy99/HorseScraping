@@ -21,4 +21,3 @@ F:\Work\UpworkProjects\HorseScrapping\HorseScrapping\obj\Debug\HorseScrapping.Pr
 F:\Work\UpworkProjects\HorseScrapping\HorseScrapping\obj\Debug\HorseScrapping.csproj.GenerateResource.Cache
 F:\Work\UpworkProjects\HorseScrapping\HorseScrapping\obj\Debug\HorseScrapping.exe
 F:\Work\UpworkProjects\HorseScrapping\HorseScrapping\obj\Debug\HorseScrapping.pdb
-F:\Work\UpworkProjects\HorseScrapping\HorseScrapping\obj\Debug\HorseScrapping.csprojResolveAssemblyReference.cache

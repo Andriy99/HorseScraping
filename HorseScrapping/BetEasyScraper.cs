@@ -35,9 +35,10 @@ namespace HorseScrapping
                 IWebElement userElement = getElementBy(m_chrDriver, By.CssSelector("input[name='username']"));
                 IWebElement pwdElement = getElementBy(m_chrDriver, By.CssSelector("input[name='password']"));
                 userElement.SendKeys(m_strUser);
+                Thread.Sleep(1000);
                 pwdElement.SendKeys(m_strPwd);
                 loginSubmitBtn.Click();
-                Thread.Sleep(3000);
+                Thread.Sleep(2000);
                 
             }
             catch (Exception e)
@@ -122,6 +123,10 @@ namespace HorseScrapping
                 previousSource = m_chrDriver.PageSource;
                 IWebElement marcketTabContainer = getElementBy(m_chrDriver, By.CssSelector("div[class='racing-number']"));
                 IEnumerable<IWebElement> tabs = marcketTabContainer.FindElements(By.CssSelector("li[class=' single-bet']"));
+                if (tabs.Count() == 0)
+                {
+                    tabs = marcketTabContainer.FindElements(By.CssSelector("li[class='open-for-betting single-bet']"));
+                }
                 foreach (IWebElement tabItem in tabs)
                 {
                     try

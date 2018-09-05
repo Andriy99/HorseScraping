@@ -74,10 +74,11 @@ namespace HorseScrapping
             try
             {
                 m_chrDriver.Navigate().GoToUrl(url);
-                WaitForTagVisible(m_chrDriver, By.CssSelector("table[class='odds horses narrow-odds']"));
+                WaitForTagVisible(m_chrDriver, By.CssSelector("div[class='competitor-view ']"));
                 previousSource = m_chrDriver.PageSource;
-                IWebElement raceRowsContainer = getElementBy(m_chrDriver, By.CssSelector("table[class='odds horses narrow-odds']"));
-                IEnumerable<IWebElement> raceRows = raceRowsContainer.FindElements(By.CssSelector("tr"));
+                IWebElement raceRowsContainer = getElementBy(m_chrDriver, By.CssSelector("div[class='competitor-view ']"));
+                IWebElement raceTableContainer = getElementBy(raceRowsContainer, By.CssSelector("table"));
+                IEnumerable<IWebElement> raceRows = raceTableContainer.FindElements(By.CssSelector("tr"));
                 foreach (IWebElement raceItem in raceRows)
                 {                    
                     if (raceItem.GetAttribute("class").Contains("competitor row not-scratched saddle-") && !raceItem.Text.Contains("Scratched"))

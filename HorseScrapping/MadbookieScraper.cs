@@ -122,7 +122,7 @@ namespace HorseScrapping
                 previousSource = m_chrDriver.PageSource;
                 IWebElement marcketTabContainer = getElementBy(m_chrDriver, By.CssSelector("div[class='raceNumberTabs']"));
                 IEnumerable<IWebElement> tabs = marcketTabContainer.FindElements(By.CssSelector("li"));
-                for (int i = 0; i < tabs.Count() - 1; i++)
+                for (int i = 0; i < tabs.Count() ; i++)
                 {
                     try
                     {

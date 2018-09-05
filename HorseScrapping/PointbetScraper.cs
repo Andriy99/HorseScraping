@@ -26,10 +26,6 @@ namespace HorseScrapping
             try
             {
                 m_chrDriver.Navigate().GoToUrl(m_strDomain);
-                WaitForTagVisible(m_chrDriver,By.CssSelector("a[class='ol-decline']"));
-                previousSource = m_chrDriver.PageSource;
-                IWebElement olBtn = getElementBy(m_chrDriver, By.CssSelector("a[class='ol-decline']"));
-                olBtn.Click();
                 WaitForTagVisible(m_chrDriver, By.CssSelector("button[class='btn btn-quartenary']"));
                 IWebElement loginBtn = getElementBy(m_chrDriver, By.CssSelector("button[class='btn btn-quartenary'"));
                 loginBtn.Click();
@@ -38,9 +34,10 @@ namespace HorseScrapping
                 IWebElement userElement = getElementBy(m_chrDriver, By.CssSelector("input[id='login-username']"));
                 IWebElement pwdElement = getElementBy(m_chrDriver, By.CssSelector("input[id='Password']"));
                 userElement.SendKeys(m_strUser);
+                Thread.Sleep(1000);
                 pwdElement.SendKeys(m_strPwd);
                 loginSubmitBtn.Click();
-                Thread.Sleep(3000);
+                Thread.Sleep(2000);
                 
             }
             catch (Exception e)
@@ -84,7 +81,7 @@ namespace HorseScrapping
                 {
                     RunnerNamePrice runnerNameTemp = new RunnerNamePrice();
                     IWebElement detailedInfo = raceItem.FindElement(By.CssSelector("div[class='runner']"));
-                    string[] detailedArray = detailedInfo.Text.Substring(0, detailedInfo.Text.IndexOf("(")).Split('.');
+                    string[] detailedArray = detailedInfo.Text.Split('.');
                     runnerNameTemp.m_strRunnerNumber = detailedArray[0].Replace(" ","");
                     runnerNameTemp.m_strRunnerName = detailedArray[1].Replace("  ","");
                     try
@@ -121,7 +118,7 @@ namespace HorseScrapping
                     try
                     {
                         tabItem.Click();
-                        WaitForTagVisible(m_chrDriver, By.CssSelector("div[class='racing-bets bet-win-place bet-fixed-price']"));
+                        WaitForTagVisible(m_chrDriver, By.CssSelector("ul[class='race-list']"));
                         m_lstEventUrls.Add(m_chrDriver.Url);
                     }
                     catch (Exception e)

@@ -73,13 +73,13 @@ namespace HorseScrapping
             try
             {
                 m_chrDriver.Navigate().GoToUrl(url);
-                WaitForTagVisible(m_chrDriver, By.CssSelector("table[class='odds horses']"));
+                WaitForTagVisible(m_chrDriver, By.CssSelector("table[class='odds horses narrow-odds']"));
                 previousSource = m_chrDriver.PageSource;
-                IWebElement raceRowsContainer = getElementBy(m_chrDriver, By.CssSelector("table[class='odds horses']"));
-                IEnumerable<IWebElement> raceRows = raceRowsContainer.FindElements(By.CssSelector("tr[data-pickyourodds-matrix='[]']"));
+                IWebElement raceRowsContainer = getElementBy(m_chrDriver, By.CssSelector("table[class='odds horses narrow-odds']"));
+                IEnumerable<IWebElement> raceRows = raceRowsContainer.FindElements(By.CssSelector("tr"));
                 foreach (IWebElement raceItem in raceRows)
                 {
-                    if (!raceItem.Text.Contains("Scratched"))
+                    if (!raceItem.Text.Contains("Scratched") && !raceItem.GetAttribute("style").Contains("display:none;"))
                     {
                         RunnerNamePrice runnerNameTemp = new RunnerNamePrice();
                         runnerNameTemp.m_strRunnerNumber = getElementBy(m_chrDriver, By.CssSelector("span[class='saddle-number']")).Text;
@@ -88,12 +88,12 @@ namespace HorseScrapping
                         {
                             runnerNameTemp.m_strWinPrice = getElementBy(raceItem,By.CssSelector("td[class='win odds odds odds-FixedWin subcontent subcontent-default subcontent-results subcontent-fullresults subcontent-winplace']")).Text;
                             runnerNameTemp.m_strFixedPrice = getElementBy(raceItem,By.CssSelector("td[class='place odds odds odds-FixedPlace subcontent subcontent-default subcontent-results subcontent-fullresults subcontent-winplace']")).Text;
+                            m_lstRunnerName.Add(runnerNameTemp);
                         }
                         catch (Exception e)
                         {
 
                         }
-                        m_lstRunnerName.Add(runnerNameTemp);
                     }
                 }
                 return m_lstRunnerName.ToArray();

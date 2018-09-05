@@ -117,20 +117,21 @@ namespace HorseScrapping
             try
             {
                 m_chrDriver.Navigate().GoToUrl(url);
-                WaitForTagVisible(m_chrDriver, By.CssSelector("a[class='race-pagination__link']"));
+                WaitForTagVisible(m_chrDriver, By.CssSelector("ul[class='race-pagination']"));
                 previousSource = m_chrDriver.PageSource;
                 IWebElement marcketTabContainer = getElementBy(m_chrDriver, By.CssSelector("ul[class='race-pagination']"));
-                IEnumerable<IWebElement> tabs = marcketTabContainer.FindElements(By.CssSelector("a[class='race-pagination__link']"));
+                IEnumerable<IWebElement> tabs = marcketTabContainer.FindElements(By.CssSelector("li[class='race-pagination__item  flyout  flyout--right  flyout--tote ng-scope']"));
                 for (int i = 0;i<tabs.Count();i++)
                 {
                     try
                     {
                         IWebElement tabItem = tabs.ElementAt(i);
                         tabItem.Click();
-                        WaitForTagVisible(m_chrDriver, By.CssSelector("a[class='race-pagination__link']"));
+                        Thread.Sleep(2000);
+                        WaitForTagVisible(m_chrDriver, By.CssSelector("ul[class='race-pagination']"));
                         previousSource = m_chrDriver.PageSource;
                         marcketTabContainer = getElementBy(m_chrDriver, By.CssSelector("ul[class='race-pagination']"));
-                        tabs = marcketTabContainer.FindElements(By.CssSelector("a[class='race-pagination__link']"));
+                        tabs = marcketTabContainer.FindElements(By.CssSelector("li[class='race-pagination__item  flyout  flyout--right  flyout--tote ng-scope']"));
                         m_lstEventUrls.Add(m_chrDriver.Url);
                     }
                     catch (Exception e)
